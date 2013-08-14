@@ -5,6 +5,8 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.TextBox;
+import javax.microedition.lcdui.TextField;
 import javax.microedition.midlet.MIDlet;
 import javax.microedition.midlet.MIDletStateChangeException;
 
@@ -41,10 +43,11 @@ public class RussianRiddles extends MIDlet implements CommandListener {
 	 */
 	private Displayable getMainScreen() {
 		//TODO: Implement the main screen here.
-		return new Canvas() {
-			protected void paint(Graphics g) {
-			}
-		};
+//		return new Canvas() {
+//			protected void paint(Graphics g) {
+//			}
+//		};
+		return new Menu();
 	}
 
 	/* (non-Javadoc)
