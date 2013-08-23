@@ -120,6 +120,7 @@ public class MenuItem extends CustomItem {
         
         if (this.mainMenu != null) {
         	this.mainMenu.itemClicked(this);
+        	this.pointerReleased(x, y);
         }
     }
 

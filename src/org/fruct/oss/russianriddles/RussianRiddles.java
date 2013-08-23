@@ -47,7 +47,7 @@ public class RussianRiddles extends MIDlet implements CommandListener {
 //			protected void paint(Graphics g) {
 //			}
 //		};
-		return new Menu();
+		return new Menu(this.display);
 	}
 
 	/* (non-Javadoc)
