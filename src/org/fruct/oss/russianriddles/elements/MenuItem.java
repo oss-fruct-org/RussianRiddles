@@ -1,7 +1,10 @@
 package org.fruct.oss.russianriddles.elements;
 
 import javax.microedition.lcdui.CustomItem;
+import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
+
+import org.fruct.oss.russianriddles.Menu;
 
 //import com.nokia.example.composedui.views.elements.GridLayout;
 
@@ -22,6 +25,8 @@ public class MenuItem extends CustomItem {
     
     private int lastX = 0;
     private int lastY = 0;
+    
+    private Menu mainMenu = null;
 
     private MenuItem() {
     	super(null);
@@ -33,6 +38,10 @@ public class MenuItem extends CustomItem {
     	this.text = text;
     	this.width = width;
     	this.height = height;
+    }
+    
+    public void setMenu(Menu newMenu) {
+    	this.mainMenu = newMenu;
     }
 
 	protected int getMinContentHeight() {
@@ -108,6 +117,10 @@ public class MenuItem extends CustomItem {
         lastY = y;
         highlight = true;
         repaint();
+        
+        if (this.mainMenu != null) {
+        	this.mainMenu.itemClicked(this);
+        }
     }
 
     /**
