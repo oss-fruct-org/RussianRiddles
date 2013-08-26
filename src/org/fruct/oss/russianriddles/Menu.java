@@ -49,6 +49,7 @@ public class Menu extends Form implements CommandListener{
 				gameForm.addCommand(this.back);
 			}
 			this.manager.next(gameForm);
+			gameForm.startGame();
 		}else if (itm == helpItem) {
 			System.err.println("Show help");
 		}else {
