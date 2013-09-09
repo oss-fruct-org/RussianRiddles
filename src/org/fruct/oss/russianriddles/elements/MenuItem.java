@@ -5,9 +5,14 @@ import javax.microedition.lcdui.Graphics;
 
 import org.fruct.oss.russianriddles.Menu;
 
+import com.nokia.mid.ui.gestures.GestureEvent;
+import com.nokia.mid.ui.gestures.GestureInteractiveZone;
+import com.nokia.mid.ui.gestures.GestureListener;
+import com.nokia.mid.ui.gestures.GestureRegistrationManager;
+
 //import com.nokia.example.composedui.views.elements.GridLayout;
 
-public class MenuItem extends CustomItem {
+public class MenuItem extends CustomItem implements GestureListener {
 
     private static final int HILIGHT_COLOR = 0x29a7cc;
     private static final int BACKGROUND_COLOR = 0xf4f4f4;
@@ -36,6 +41,10 @@ public class MenuItem extends CustomItem {
     	this.text = text;
     	this.width = width;
     	this.height = height;
+    	
+    	GestureInteractiveZone gis = new GestureInteractiveZone(GestureInteractiveZone.GESTURE_TAP | 256);
+    	GestureRegistrationManager.register(this, gis);
+    	GestureRegistrationManager.setListener(this, this);
     }
     
     public void setMenu(Menu newMenu) {
@@ -107,43 +116,52 @@ public class MenuItem extends CustomItem {
 
 	}
 
-    /**
-     * @see javax.microedition.lcdui.CustomItem#pointerPressed(int, int)
-     */
-    protected void pointerPressed(int x, int y) {
-        lastX = x;
-        lastY = y;
-        highlight = true;
-        repaint();
-    }
+	public void gestureAction(Object container,
+			GestureInteractiveZone gestureInteractiveZone,
+			GestureEvent gestureEvent) {
 
-    /**
-     * @see javax.microedition.lcdui.CustomItem#pointerDragged(int, int)
-     */
-    protected void pointerDragged(int x, int y) {
-        if (Math.abs(lastX - x) > JITTER_THRESHOLD
-            || Math.abs(lastY - y) > JITTER_THRESHOLD)
-        {
-            // Too much jitter. Lose the focus.
-            highlight = false;
-            repaint();
-        }
-    }
+		System.err.println("gestureAction: " + String.valueOf(gestureEvent.getType()));
+			this.mainMenu.itemClicked(this);
+		
+	}
 
-    /**
-     * @see javax.microedition.lcdui.CustomItem#pointerReleased(int, int)
-     */
-    protected void pointerReleased(int x, int y) {
-        if (highlight) {
-            this.notifyStateChanged();
-            highlight = false;
-            repaint();
-            
-            if (this.mainMenu != null) {
-            	this.mainMenu.itemClicked(this);
-            	this.pointerReleased(x, y);
-            }
-        }
-    }
+//    /**
+//     * @see javax.microedition.lcdui.CustomItem#pointerPressed(int, int)
+//     */
+//    protected void pointerPressed(int x, int y) {
+//        lastX = x;
+//        lastY = y;
+//        highlight = true;
+//        repaint();
+//    }
+//
+//    /**
+//     * @see javax.microedition.lcdui.CustomItem#pointerDragged(int, int)
+//     */
+//    protected void pointerDragged(int x, int y) {
+//        if (Math.abs(lastX - x) > JITTER_THRESHOLD
+//            || Math.abs(lastY - y) > JITTER_THRESHOLD)
+//        {
+//            // Too much jitter. Lose the focus.
+//            highlight = false;
+//            repaint();
+//        }
+//    }
+//
+//    /**
+//     * @see javax.microedition.lcdui.CustomItem#pointerReleased(int, int)
+//     */
+//    protected void pointerReleased(int x, int y) {
+//        if (highlight) {
+//            this.notifyStateChanged();
+//            highlight = false;
+//            repaint();
+//            
+//            if (this.mainMenu != null) {
+//            	this.mainMenu.itemClicked(this);
+//            	this.pointerReleased(x, y);
+//            }
+//        }
+//    }
 
 }
