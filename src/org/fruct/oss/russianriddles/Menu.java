@@ -5,6 +5,8 @@ import javax.microedition.lcdui.CommandListener;
 import javax.microedition.lcdui.Display;
 import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Form;
+import javax.microedition.lcdui.StringItem;
+
 import org.fruct.oss.russianriddles.elements.*;
 
 public class Menu extends Form implements CommandListener{
@@ -14,11 +16,15 @@ public class Menu extends Form implements CommandListener{
     private MenuItem gameItem;
     private MenuItem helpItem;
     private MenuItem aboutItem;
+    
+    private StringItem result;
 
-    private DisplayManager manager;
+    public DisplayManager manager;
 	private Command	 back;
     
     AboutForm aboutForm = null;
+    
+    HelpForm helpForm = null;
     
     GameForm gameForm = null;
 	
@@ -36,6 +42,9 @@ public class Menu extends Form implements CommandListener{
 		aboutItem.setMenu(this);
 		append(aboutItem);
 		
+		result = new StringItem(null, null);
+		append(result);
+		
 		this.back = new Command("Back", Command.BACK, 1);
 		this.manager.add(this);
 	}
@@ -44,14 +53,19 @@ public class Menu extends Form implements CommandListener{
 		if (itm == gameItem) {
 			System.err.println("Start game");
 			if (gameForm == null) {
-				gameForm = new GameForm();
+				gameForm = new GameForm(this);
 				gameForm.setCommandListener(this);
 				gameForm.addCommand(this.back);
 			}
 			this.manager.next(gameForm);
 			gameForm.startGame();
 		}else if (itm == helpItem) {
-			System.err.println("Show help");
+			if (helpForm == null){
+				helpForm = new HelpForm();
+				helpForm.setCommandListener(this);
+				helpForm.addCommand(this.back);
+			}
+			this.manager.next(helpForm);
 		}else {
 			if (aboutForm == null){
 				aboutForm = new AboutForm();
@@ -64,10 +78,19 @@ public class Menu extends Form implements CommandListener{
 	}
 
 	public void commandAction(Command c, Displayable d) {
-		// TODO Auto-generated method stub
 		if (c == this.back) {
 			this.manager.back();
+			if (gameForm != null)
+				gameForm.stopGame();
 		}
 
+	}
+	
+	public void showResult() {
+		this.result.setText("\n Было загадано слово \"" + gameForm.solution + "\" (\"" + gameForm.solutionTransl + "\"). Успешно отгадано " +gameForm.numSuccessQuestions + " загадок.");
+	}
+	
+	public void hideResult() {
+		this.result.setText(null);
 	}
 }

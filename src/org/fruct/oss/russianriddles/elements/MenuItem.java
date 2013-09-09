@@ -1,7 +1,6 @@
 package org.fruct.oss.russianriddles.elements;
 
 import javax.microedition.lcdui.CustomItem;
-import javax.microedition.lcdui.Displayable;
 import javax.microedition.lcdui.Graphics;
 
 import org.fruct.oss.russianriddles.Menu;
@@ -10,7 +9,6 @@ import org.fruct.oss.russianriddles.Menu;
 
 public class MenuItem extends CustomItem {
 
-    private static final int MARGIN = 5;
     private static final int HILIGHT_COLOR = 0x29a7cc;
     private static final int BACKGROUND_COLOR = 0xf4f4f4;
     private static final int TEXT_COLOR_NOT_SELECTED = 0x595959;
@@ -117,11 +115,6 @@ public class MenuItem extends CustomItem {
         lastY = y;
         highlight = true;
         repaint();
-        
-        if (this.mainMenu != null) {
-        	this.mainMenu.itemClicked(this);
-        	this.pointerReleased(x, y);
-        }
     }
 
     /**
@@ -145,6 +138,11 @@ public class MenuItem extends CustomItem {
             this.notifyStateChanged();
             highlight = false;
             repaint();
+            
+            if (this.mainMenu != null) {
+            	this.mainMenu.itemClicked(this);
+            	this.pointerReleased(x, y);
+            }
         }
     }
 
