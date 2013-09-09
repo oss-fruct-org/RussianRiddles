@@ -26,9 +26,6 @@ public class MenuItem extends CustomItem implements GestureListener {
     protected String text = null;
     protected boolean highlight = false;
     
-    private int lastX = 0;
-    private int lastY = 0;
-    
     private Menu mainMenu = null;
 
     private MenuItem() {
