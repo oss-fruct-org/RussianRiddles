@@ -87,7 +87,7 @@ public class Menu extends Form implements CommandListener{
 	}
 	
 	public void showResult() {
-		this.result.setText("\n Было загадано слово \"" + gameForm.solution + "\" (\"" + gameForm.solutionTransl + "\"). Успешно отгадано " +gameForm.numSuccessQuestions + " загадок.");
+		this.result.setText("\n Было загадано слово \"" + gameForm.solution + "\" (\"" + gameForm.solutionTransl + "\"). Успешно отгадано загадок: " + gameForm.numSuccessQuestions + ".");
 	}
 	
 	public void hideResult() {
