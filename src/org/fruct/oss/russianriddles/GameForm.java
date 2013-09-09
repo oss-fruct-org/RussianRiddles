@@ -117,14 +117,16 @@ public class GameForm extends Form implements ItemStateListener {
 				gameTimer.schedule(new TimerTask(){public void run() {game.nextQuestion();}}, 50);
 			} else {
 				System.err.println("bad");
-				errorMsg.setText("Неправильно!" + (this.currentTip != null ? " (" + this.currentTip : ")"));
+				errorMsg.setText("Неправильно!" + (this.currentTip != null ? " (" + this.currentTip +")" : ""));
 		}
 	}
 
 	public void itemStateChanged(Item item) {
 		if (item == fld) {
-			if (fld.getString().endsWith("\n")) {
-				fld.setString(fld.getString().substring(0, fld.getString().length() - 1));
+			if (fld.getString().indexOf("\n") >= 0) {
+				String st = fld.getString().substring(0, fld.getString().indexOf("\n")) + 
+						fld.getString().substring(fld.getString().indexOf("\n") + 1, fld.getString().length());
+				fld.setString(st);
 				checkSolution();
 			} else {
 				System.err.println("empty string");
@@ -137,7 +139,7 @@ public class GameForm extends Form implements ItemStateListener {
 		System.err.println("stop");
 		fld.setConstraints((fld.getConstraints() & TextField.CONSTRAINT_MASK)|TextField.UNEDITABLE);
 		gameTask.cancel();
-		if (elapsedTime <= 0)
+		if (this.numSuccessQuestions > 0 || this.elapsedTime <= 0)
 			menu.showResult();
 		else
 			menu.hideResult();
