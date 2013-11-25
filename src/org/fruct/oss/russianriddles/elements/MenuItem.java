@@ -5,6 +5,7 @@ import javax.microedition.lcdui.Graphics;
 
 import org.fruct.oss.russianriddles.Menu;
 
+import com.nokia.mid.ui.LCDUIUtil;
 import com.nokia.mid.ui.gestures.GestureEvent;
 import com.nokia.mid.ui.gestures.GestureInteractiveZone;
 import com.nokia.mid.ui.gestures.GestureListener;
@@ -39,9 +40,10 @@ public class MenuItem extends CustomItem implements GestureListener {
     	this.width = width;
     	this.height = height;
     	
-    	GestureInteractiveZone gis = new GestureInteractiveZone(GestureInteractiveZone.GESTURE_TAP | 256);
+    	GestureInteractiveZone gis = new GestureInteractiveZone(GestureInteractiveZone.GESTURE_TAP);
     	GestureRegistrationManager.register(this, gis);
     	GestureRegistrationManager.setListener(this, this);
+    	LCDUIUtil.setObjectTrait(this, "nokia.ui.s40.item.direct_touch", Boolean.TRUE);
     }
     
     public void setMenu(Menu newMenu) {
